@@ -23,28 +23,27 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:   "opencode",
-	Short: "Terminal-based AI assistant for software development",
-	Long: `OpenCode is a powerful terminal-based AI assistant that helps with software development tasks.
-It provides an interactive chat interface with AI capabilities, code analysis, and LSP integration
-to assist developers in writing, debugging, and understanding code directly from the terminal.`,
+	Short: "终端 AI 编程助手",
+	Long: `OpenCode 是一款强大的终端 AI 编程助手，提供交互式聊天、代码分析、LSP 集成等能力，
+帮助开发者在终端中直接完成编写、调试和理解代码的工作。`,
 	Example: `
-  # Run in interactive mode
+  # 交互模式启动
   opencode
 
-  # Run with debug logging
+  # 调试模式启动
   opencode -d
 
-  # Run with debug logging in a specific directory
+  # 指定目录调试模式
   opencode -d -c /path/to/project
 
-  # Print version
+  # 查看版本
   opencode -v
 
-  # Run a single non-interactive prompt
-  opencode -p "Explain the use of context in Go"
+  # 单次非交互模式提问
+  opencode -p "解释 Go 中 context 的用法"
 
-  # Run a single non-interactive prompt with JSON output format
-  opencode -p "Explain the use of context in Go" -f json
+  # JSON 格式输出
+  opencode -p "解释 Go 中 context 的用法" -f json
   `,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		// If the help flag is set, show the help message
@@ -289,18 +288,18 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.Flags().BoolP("help", "h", false, "Help")
-	rootCmd.Flags().BoolP("version", "v", false, "Version")
-	rootCmd.Flags().BoolP("debug", "d", false, "Debug")
-	rootCmd.Flags().StringP("cwd", "c", "", "Current working directory")
-	rootCmd.Flags().StringP("prompt", "p", "", "Prompt to run in non-interactive mode")
+	rootCmd.Flags().BoolP("help", "h", false, "帮助")
+	rootCmd.Flags().BoolP("version", "v", false, "版本")
+	rootCmd.Flags().BoolP("debug", "d", false, "调试模式")
+	rootCmd.Flags().StringP("cwd", "c", "", "当前工作目录")
+	rootCmd.Flags().StringP("prompt", "p", "", "非交互模式下的提问内容")
 
 	// Add format flag with validation logic
 	rootCmd.Flags().StringP("output-format", "f", format.Text.String(),
-		"Output format for non-interactive mode (text, json)")
+		"非交互模式的输出格式 (text, json)")
 
 	// Add quiet flag to hide spinner in non-interactive mode
-	rootCmd.Flags().BoolP("quiet", "q", false, "Hide spinner in non-interactive mode")
+	rootCmd.Flags().BoolP("quiet", "q", false, "非交互模式隐藏转圈动画")
 
 	// Register custom validation for the format flag
 	rootCmd.RegisterFlagCompletionFunc("output-format", func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {

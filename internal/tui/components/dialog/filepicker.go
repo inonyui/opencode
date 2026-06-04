@@ -44,35 +44,35 @@ type FilePrickerKeyMap struct {
 var filePickerKeyMap = FilePrickerKeyMap{
 	Enter: key.NewBinding(
 		key.WithKeys("enter"),
-		key.WithHelp("enter", "select file/enter directory"),
+		key.WithHelp("enter", "选择文件/进入目录"),
 	),
 	Down: key.NewBinding(
 		key.WithKeys("j", downArrow),
-		key.WithHelp("↓/j", "down"),
+		key.WithHelp("↓/j", "向下"),
 	),
 	Up: key.NewBinding(
 		key.WithKeys("k", upArrow),
-		key.WithHelp("↑/k", "up"),
+		key.WithHelp("↑/k", "向上"),
 	),
 	Forward: key.NewBinding(
 		key.WithKeys("l"),
-		key.WithHelp("l", "enter directory"),
+		key.WithHelp("l", "进入目录"),
 	),
 	Backward: key.NewBinding(
 		key.WithKeys("h", "backspace"),
-		key.WithHelp("h/backspace", "go back"),
+		key.WithHelp("h/backspace", "返回上级"),
 	),
 	OpenFilePicker: key.NewBinding(
 		key.WithKeys("ctrl+f"),
-		key.WithHelp("ctrl+f", "open file picker"),
+		key.WithHelp("ctrl+f", "打开文件选择器"),
 	),
 	Esc: key.NewBinding(
 		key.WithKeys("esc"),
-		key.WithHelp("esc", "close/exit"),
+		key.WithHelp("esc", "关闭/退出"),
 	),
 	InsertCWD: key.NewBinding(
 		key.WithKeys("i"),
-		key.WithHelp("i", "manual path input"),
+		key.WithHelp("i", "手动输入路径"),
 	),
 }
 
@@ -159,7 +159,7 @@ func (f *filepickerCmp) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				path = f.cwd.Value()
 				fileInfo, err := os.Stat(path)
 				if err != nil {
-					logging.ErrorPersist("Invalid path")
+					logging.ErrorPersist("无效路径")
 					return f, cmd
 				}
 				isPathDir = fileInfo.IsDir()
@@ -230,23 +230,23 @@ func (f *filepickerCmp) addAttachmentToMessage() (tea.Model, tea.Cmd) {
 
 	selectedFilePath := f.selectedFile
 	if !isExtSupported(selectedFilePath) {
-		logging.ErrorPersist("Unsupported file")
+		logging.ErrorPersist("不支持的附件类型")
 		return f, nil
 	}
 
 	isFileLarge, err := image.ValidateFileSize(selectedFilePath, maxAttachmentSize)
 	if err != nil {
-		logging.ErrorPersist("unable to read the image")
+		logging.ErrorPersist("无法读取文件")
 		return f, nil
 	}
 	if isFileLarge {
-		logging.ErrorPersist("file too large, max 5MB")
+		logging.ErrorPersist("文件过大，最大 5MB")
 		return f, nil
 	}
 
 	content, err := os.ReadFile(selectedFilePath)
 	if err != nil {
-		logging.ErrorPersist("Unable read selected file")
+		logging.ErrorPersist("无法读取所选文件")
 		return f, nil
 	}
 
@@ -328,9 +328,9 @@ func (f *filepickerCmp) View() string {
 		Render(f.viewport.View())
 	var insertExitText string
 	if f.IsCWDFocused() {
-		insertExitText = "Press esc to exit typing path"
+		insertExitText = "按 esc 结束路径输入"
 	} else {
-		insertExitText = "Press i to start typing path"
+		insertExitText = "按 i 开始路径输入"
 	}
 
 	content := lipgloss.JoinVertical(
@@ -385,8 +385,8 @@ func NewFilepickerCmp(app *app.App) FilepickerCmp {
 
 func (f *filepickerCmp) getCurrentFileBelowCursor() {
 	if len(f.dirs) == 0 || f.cursor < 0 || f.cursor >= len(f.dirs) {
-		logging.Error(fmt.Sprintf("Invalid cursor position. Dirs length: %d, Cursor: %d", len(f.dirs), f.cursor))
-		f.viewport.SetContent("Preview unavailable")
+		logging.Error(fmt.Sprintf("无效的光标位置: %d / %d", f.cursor, len(f.dirs)))
+		f.viewport.SetContent("预览不可用")
 		return
 	}
 
@@ -399,14 +399,14 @@ func (f *filepickerCmp) getCurrentFileBelowCursor() {
 			imageString, err := image.ImagePreview(f.viewport.Width-4, fullPath)
 			if err != nil {
 				logging.Error(err.Error())
-				f.viewport.SetContent("Preview unavailable")
+				f.viewport.SetContent("预览不可用")
 				return
 			}
 
 			f.viewport.SetContent(imageString)
 		}()
 	} else {
-		f.viewport.SetContent("Preview unavailable")
+		f.viewport.SetContent("预览不可用")
 	}
 }
 

@@ -38,15 +38,15 @@ type ChatKeyMap struct {
 var keyMap = ChatKeyMap{
 	ShowCompletionDialog: key.NewBinding(
 		key.WithKeys("@"),
-		key.WithHelp("@", "Complete"),
+		key.WithHelp("@", "补全"),
 	),
 	NewSession: key.NewBinding(
 		key.WithKeys("ctrl+n"),
-		key.WithHelp("ctrl+n", "new session"),
+		key.WithHelp("ctrl+n", "新建会话"),
 	),
 	Cancel: key.NewBinding(
 		key.WithKeys("esc"),
-		key.WithHelp("esc", "cancel"),
+		key.WithHelp("esc", "取消"),
 	),
 }
 
@@ -74,7 +74,7 @@ func (p *chatPage) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case dialog.CommandRunCustomMsg:
 		// Check if the agent is busy before executing custom commands
 		if p.app.CoderAgent.IsBusy() {
-			return p, util.ReportWarn("Agent is busy, please wait before executing a command...")
+			return p, util.ReportWarn("代理正忙，请稍候再执行命令...")
 		}
 		
 		// Process the command content with arguments if any

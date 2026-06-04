@@ -45,7 +45,7 @@ func LoadCustomCommands() ([]Command, error) {
 		userCommands, err := loadCommandsFromDir(userCommandsDir, UserCommandPrefix)
 		if err != nil {
 			// Log error but continue - we'll still try to load other commands
-			fmt.Printf("Warning: failed to load user commands from XDG_CONFIG_HOME: %v\n", err)
+			fmt.Printf("警告: 从 XDG_CONFIG_HOME 加载用户命令失败: %v\n", err)
 		} else {
 			commands = append(commands, userCommands...)
 		}
@@ -58,7 +58,7 @@ func LoadCustomCommands() ([]Command, error) {
 		homeCommands, err := loadCommandsFromDir(homeCommandsDir, UserCommandPrefix)
 		if err != nil {
 			// Log error but continue - we'll still try to load other commands
-			fmt.Printf("Warning: failed to load home commands: %v\n", err)
+			fmt.Printf("警告: 从 home 目录加载命令失败: %v\n", err)
 		} else {
 			commands = append(commands, homeCommands...)
 		}
@@ -69,7 +69,7 @@ func LoadCustomCommands() ([]Command, error) {
 	projectCommands, err := loadCommandsFromDir(projectCommandsDir, ProjectCommandPrefix)
 	if err != nil {
 		// Log error but return what we have so far
-		fmt.Printf("Warning: failed to load project commands: %v\n", err)
+		fmt.Printf("警告: 加载项目命令失败: %v\n", err)
 	} else {
 		commands = append(commands, projectCommands...)
 	}
@@ -133,7 +133,7 @@ func loadCommandsFromDir(commandsDir string, prefix string) ([]Command, error) {
 		command := Command{
 			ID:          prefix + commandID,
 			Title:       prefix + commandID,
-			Description: fmt.Sprintf("Custom command from %s", relPath),
+			Description: fmt.Sprintf("自定义命令: %s", relPath),
 			Handler: func(cmd Command) tea.Cmd {
 				commandContent := string(content)
 

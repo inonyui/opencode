@@ -181,7 +181,7 @@ func (m *sidebarCmp) modifiedFiles() string {
 
 	// If no modified files, show a placeholder message
 	if m.modFiles == nil || len(m.modFiles) == 0 {
-		message := "No modified files"
+		message := "无修改文件"
 		remainingWidth := m.width - lipgloss.Width(message)
 		if remainingWidth > 0 {
 			message += strings.Repeat(" ", remainingWidth)

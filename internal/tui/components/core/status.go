@@ -221,7 +221,7 @@ func (m *statusCmp) projectDiagnostics() string {
 	}
 
 	if len(errorDiagnostics) == 0 && len(warnDiagnostics) == 0 && len(hintDiagnostics) == 0 && len(infoDiagnostics) == 0 {
-		return "No diagnostics"
+		return "无诊断信息"
 	}
 
 	diagnostics := []string{}

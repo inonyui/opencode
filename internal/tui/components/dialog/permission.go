@@ -52,31 +52,31 @@ type permissionsMapping struct {
 var permissionsKeys = permissionsMapping{
 	Left: key.NewBinding(
 		key.WithKeys("left"),
-		key.WithHelp("←", "switch options"),
+		key.WithHelp("←", "切换选项"),
 	),
 	Right: key.NewBinding(
 		key.WithKeys("right"),
-		key.WithHelp("→", "switch options"),
+		key.WithHelp("→", "切换选项"),
 	),
 	EnterSpace: key.NewBinding(
 		key.WithKeys("enter", " "),
-		key.WithHelp("enter/space", "confirm"),
+		key.WithHelp("enter/space", "确认"),
 	),
 	Allow: key.NewBinding(
 		key.WithKeys("a"),
-		key.WithHelp("a", "allow"),
+		key.WithHelp("a", "允许"),
 	),
 	AllowSession: key.NewBinding(
 		key.WithKeys("s"),
-		key.WithHelp("s", "allow for session"),
+		key.WithHelp("s", "本次会话允许"),
 	),
 	Deny: key.NewBinding(
 		key.WithKeys("d"),
-		key.WithHelp("d", "deny"),
+		key.WithHelp("d", "拒绝"),
 	),
 	Tab: key.NewBinding(
 		key.WithKeys("tab"),
-		key.WithHelp("tab", "switch options"),
+		key.WithHelp("tab", "切换选项"),
 	),
 }
 
@@ -173,9 +173,9 @@ func (p *permissionDialogCmp) renderButtons() string {
 		denyStyle = denyStyle.Background(t.Primary()).Foreground(t.Background())
 	}
 
-	allowButton := allowStyle.Padding(0, 1).Render("Allow (a)")
-	allowSessionButton := allowSessionStyle.Padding(0, 1).Render("Allow for session (s)")
-	denyButton := denyStyle.Padding(0, 1).Render("Deny (d)")
+	allowButton := allowStyle.Padding(0, 1).Render("允许 (a)")
+	allowSessionButton := allowSessionStyle.Padding(0, 1).Render("本次允许 (s)")
+	denyButton := denyStyle.Padding(0, 1).Render("拒绝 (d)")
 
 	content := lipgloss.JoinHorizontal(
 		lipgloss.Left,
@@ -198,13 +198,13 @@ func (p *permissionDialogCmp) renderHeader() string {
 	t := theme.CurrentTheme()
 	baseStyle := styles.BaseStyle()
 
-	toolKey := baseStyle.Foreground(t.TextMuted()).Bold(true).Render("Tool")
+	toolKey := baseStyle.Foreground(t.TextMuted()).Bold(true).Render("工具")
 	toolValue := baseStyle.
 		Foreground(t.Text()).
 		Width(p.width - lipgloss.Width(toolKey)).
 		Render(fmt.Sprintf(": %s", p.permission.ToolName))
 
-	pathKey := baseStyle.Foreground(t.TextMuted()).Bold(true).Render("Path")
+	pathKey := baseStyle.Foreground(t.TextMuted()).Bold(true).Render("路径")
 	pathValue := baseStyle.
 		Foreground(t.Text()).
 		Width(p.width - lipgloss.Width(pathKey)).
@@ -228,10 +228,10 @@ func (p *permissionDialogCmp) renderHeader() string {
 	// Add tool-specific header information
 	switch p.permission.ToolName {
 	case tools.BashToolName:
-		headerParts = append(headerParts, baseStyle.Foreground(t.TextMuted()).Width(p.width).Bold(true).Render("Command"))
+		headerParts = append(headerParts, baseStyle.Foreground(t.TextMuted()).Width(p.width).Bold(true).Render("命令"))
 	case tools.EditToolName:
 		params := p.permission.Params.(tools.EditPermissionsParams)
-		fileKey := baseStyle.Foreground(t.TextMuted()).Bold(true).Render("File")
+		fileKey := baseStyle.Foreground(t.TextMuted()).Bold(true).Render("文件")
 		filePath := baseStyle.
 			Foreground(t.Text()).
 			Width(p.width - lipgloss.Width(fileKey)).
@@ -247,7 +247,7 @@ func (p *permissionDialogCmp) renderHeader() string {
 
 	case tools.WriteToolName:
 		params := p.permission.Params.(tools.WritePermissionsParams)
-		fileKey := baseStyle.Foreground(t.TextMuted()).Bold(true).Render("File")
+		fileKey := baseStyle.Foreground(t.TextMuted()).Bold(true).Render("文件")
 		filePath := baseStyle.
 			Foreground(t.Text()).
 			Width(p.width - lipgloss.Width(fileKey)).
@@ -391,7 +391,7 @@ func (p *permissionDialogCmp) render() string {
 		Bold(true).
 		Width(p.width - 4).
 		Foreground(t.Primary()).
-		Render("Permission Required")
+		Render("需要权限")
 	// Render header
 	headerContent := p.renderHeader()
 	// Render buttons

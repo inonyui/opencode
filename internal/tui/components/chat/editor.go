@@ -52,26 +52,26 @@ type DeleteAttachmentKeyMaps struct {
 var editorMaps = EditorKeyMaps{
 	Send: key.NewBinding(
 		key.WithKeys("enter", "ctrl+s"),
-		key.WithHelp("enter", "send message"),
+		key.WithHelp("enter", "发送消息"),
 	),
 	OpenEditor: key.NewBinding(
 		key.WithKeys("ctrl+e"),
-		key.WithHelp("ctrl+e", "open editor"),
+		key.WithHelp("ctrl+e", "打开编辑器"),
 	),
 }
 
 var DeleteKeyMaps = DeleteAttachmentKeyMaps{
 	AttachmentDeleteMode: key.NewBinding(
 		key.WithKeys("ctrl+r"),
-		key.WithHelp("ctrl+r+{i}", "delete attachment at index i"),
+		key.WithHelp("ctrl+r+{i}", "删除第 i 个附件"),
 	),
 	Escape: key.NewBinding(
 		key.WithKeys("esc"),
-		key.WithHelp("esc", "cancel delete mode"),
+		key.WithHelp("esc", "取消删除模式"),
 	),
 	DeleteAllAttachments: key.NewBinding(
 		key.WithKeys("r"),
-		key.WithHelp("ctrl+r+r", "delete all attchments"),
+		key.WithHelp("ctrl+r+r", "删除全部附件"),
 	),
 }
 

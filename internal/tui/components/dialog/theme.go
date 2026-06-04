@@ -44,27 +44,27 @@ type themeKeyMap struct {
 var themeKeys = themeKeyMap{
 	Up: key.NewBinding(
 		key.WithKeys("up"),
-		key.WithHelp("↑", "previous theme"),
+		key.WithHelp("↑", "上一个主题"),
 	),
 	Down: key.NewBinding(
 		key.WithKeys("down"),
-		key.WithHelp("↓", "next theme"),
+		key.WithHelp("↓", "下一个主题"),
 	),
 	Enter: key.NewBinding(
 		key.WithKeys("enter"),
-		key.WithHelp("enter", "select theme"),
+		key.WithHelp("enter", "选择主题"),
 	),
 	Escape: key.NewBinding(
 		key.WithKeys("esc"),
-		key.WithHelp("esc", "close"),
+		key.WithHelp("esc", "关闭"),
 	),
 	J: key.NewBinding(
 		key.WithKeys("j"),
-		key.WithHelp("j", "next theme"),
+		key.WithHelp("j", "下一个主题"),
 	),
 	K: key.NewBinding(
 		key.WithKeys("k"),
-		key.WithHelp("k", "previous theme"),
+		key.WithHelp("k", "上一个主题"),
 	),
 }
 
@@ -132,7 +132,7 @@ func (t *themeDialogCmp) View() string {
 			BorderBackground(currentTheme.Background()).
 			BorderForeground(currentTheme.TextMuted()).
 			Width(40).
-			Render("No themes available")
+			Render("没有可用主题")
 	}
 
 	// Calculate max width needed for theme names
@@ -165,7 +165,7 @@ func (t *themeDialogCmp) View() string {
 		Bold(true).
 		Width(maxWidth).
 		Padding(0, 1).
-		Render("Select Theme")
+		Render("选择主题")
 
 	content := lipgloss.JoinVertical(
 		lipgloss.Left,

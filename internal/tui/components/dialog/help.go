@@ -174,7 +174,7 @@ func (h *helpCmp) View() string {
 		Bold(true).
 		Width(lipgloss.Width(content)).
 		Foreground(t.Primary()).
-		Render("Keyboard Shortcuts")
+		Render("快捷键")
 
 	return baseStyle.Padding(1).
 		Border(lipgloss.RoundedBorder()).

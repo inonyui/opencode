@@ -75,11 +75,11 @@ type commandKeyMap struct {
 var commandKeys = commandKeyMap{
 	Enter: key.NewBinding(
 		key.WithKeys("enter"),
-		key.WithHelp("enter", "select command"),
+		key.WithHelp("enter", "选择命令"),
 	),
 	Escape: key.NewBinding(
 		key.WithKeys("esc"),
-		key.WithHelp("esc", "close"),
+		key.WithHelp("esc", "关闭"),
 	),
 }
 
@@ -140,7 +140,7 @@ func (c *commandDialogCmp) View() string {
 		Bold(true).
 		Width(maxWidth).
 		Padding(0, 1).
-		Render("Commands")
+		Render("命令")
 
 	content := lipgloss.JoinVertical(
 		lipgloss.Left,
@@ -171,7 +171,7 @@ func NewCommandDialogCmp() CommandDialog {
 	listView := utilComponents.NewSimpleList[Command](
 		[]Command{},
 		10,
-		"No commands available",
+		"没有可用命令",
 		true,
 	)
 	return &commandDialogCmp{

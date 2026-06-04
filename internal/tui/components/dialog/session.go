@@ -47,27 +47,27 @@ type sessionKeyMap struct {
 var sessionKeys = sessionKeyMap{
 	Up: key.NewBinding(
 		key.WithKeys("up"),
-		key.WithHelp("↑", "previous session"),
+		key.WithHelp("↑", "上一个会话"),
 	),
 	Down: key.NewBinding(
 		key.WithKeys("down"),
-		key.WithHelp("↓", "next session"),
+		key.WithHelp("↓", "下一个会话"),
 	),
 	Enter: key.NewBinding(
 		key.WithKeys("enter"),
-		key.WithHelp("enter", "select session"),
+		key.WithHelp("enter", "选择会话"),
 	),
 	Escape: key.NewBinding(
 		key.WithKeys("esc"),
-		key.WithHelp("esc", "close"),
+		key.WithHelp("esc", "关闭"),
 	),
 	J: key.NewBinding(
 		key.WithKeys("j"),
-		key.WithHelp("j", "next session"),
+		key.WithHelp("j", "下一个会话"),
 	),
 	K: key.NewBinding(
 		key.WithKeys("k"),
-		key.WithHelp("k", "previous session"),
+		key.WithHelp("k", "上一个会话"),
 	),
 }
 
@@ -115,7 +115,7 @@ func (s *sessionDialogCmp) View() string {
 			BorderBackground(t.Background()).
 			BorderForeground(t.TextMuted()).
 			Width(40).
-			Render("No sessions available")
+			Render("没有可用会话")
 	}
 
 	// Calculate max width needed for session titles
@@ -167,7 +167,7 @@ func (s *sessionDialogCmp) View() string {
 		Bold(true).
 		Width(maxWidth).
 		Padding(0, 1).
-		Render("Switch Session")
+		Render("切换会话")
 
 	content := lipgloss.JoinVertical(
 		lipgloss.Left,

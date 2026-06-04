@@ -49,19 +49,19 @@ type MessageKeys struct {
 var messageKeys = MessageKeys{
 	PageDown: key.NewBinding(
 		key.WithKeys("pgdown"),
-		key.WithHelp("f/pgdn", "page down"),
+		key.WithHelp("f/pgdn", "下翻页"),
 	),
 	PageUp: key.NewBinding(
 		key.WithKeys("pgup"),
-		key.WithHelp("b/pgup", "page up"),
+		key.WithHelp("b/pgup", "上翻页"),
 	),
 	HalfPageUp: key.NewBinding(
 		key.WithKeys("ctrl+u"),
-		key.WithHelp("ctrl+u", "½ page up"),
+		key.WithHelp("ctrl+u", "上翻半页"),
 	),
 	HalfPageDown: key.NewBinding(
-		key.WithKeys("ctrl+d", "ctrl+d"),
-		key.WithHelp("ctrl+d", "½ page down"),
+		key.WithKeys("ctrl+d"),
+		key.WithHelp("ctrl+d", "下翻半页"),
 	),
 }
 

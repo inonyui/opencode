@@ -40,19 +40,19 @@ func (k initDialogKeyMap) ShortHelp() []key.Binding {
 	return []key.Binding{
 		key.NewBinding(
 			key.WithKeys("tab", "left", "right"),
-			key.WithHelp("tab/←/→", "toggle selection"),
+			key.WithHelp("tab/←/→", "切换选择"),
 		),
 		key.NewBinding(
 			key.WithKeys("enter"),
-			key.WithHelp("enter", "confirm"),
+			key.WithHelp("enter", "确认"),
 		),
 		key.NewBinding(
 			key.WithKeys("esc", "q"),
-			key.WithHelp("esc/q", "cancel"),
+			key.WithHelp("esc/q", "取消"),
 		),
 		key.NewBinding(
 			key.WithKeys("y", "n"),
-			key.WithHelp("y/n", "yes/no"),
+			key.WithHelp("y/n", "是/否"),
 		),
 	}
 }
@@ -104,19 +104,19 @@ func (m InitDialogCmp) View() string {
 		Bold(true).
 		Width(maxWidth).
 		Padding(0, 1).
-		Render("Initialize Project")
+		Render("初始化项目")
 
 	explanation := baseStyle.
 		Foreground(t.Text()).
 		Width(maxWidth).
 		Padding(0, 1).
-		Render("Initialization generates a new OpenCode.md file that contains information about your codebase, this file serves as memory for each project, you can freely add to it to help the agents be better at their job.")
+		Render("初始化将生成 OpenCode.md 文件，其中包含代码库的相关信息，此文件作为每个项目的记忆。你可以自由添加内容以帮助 AI 代理更好地工作。")
 
 	question := baseStyle.
 		Foreground(t.Text()).
 		Width(maxWidth).
 		Padding(1, 1).
-		Render("Would you like to initialize this project?")
+		Render("是否初始化该项目？")
 
 	maxWidth = min(maxWidth, m.width-10)
 	yesStyle := baseStyle
@@ -140,8 +140,8 @@ func (m InitDialogCmp) View() string {
 			Foreground(t.Primary())
 	}
 
-	yes := yesStyle.Padding(0, 3).Render("Yes")
-	no := noStyle.Padding(0, 3).Render("No")
+	yes := yesStyle.Padding(0, 3).Render("是")
+	no := noStyle.Padding(0, 3).Render("否")
 
 	buttons := lipgloss.JoinHorizontal(lipgloss.Center, yes, baseStyle.Render("  "), no)
 	buttons = baseStyle.

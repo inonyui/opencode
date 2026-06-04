@@ -12,7 +12,7 @@ import (
 	"github.com/opencode-ai/opencode/internal/tui/util"
 )
 
-const question = "Are you sure you want to quit?"
+const question = "确定要退出吗？"
 
 type CloseQuitMsg struct{}
 
@@ -36,23 +36,23 @@ type helpMapping struct {
 var helpKeys = helpMapping{
 	LeftRight: key.NewBinding(
 		key.WithKeys("left", "right"),
-		key.WithHelp("←/→", "switch options"),
+		key.WithHelp("←/→", "切换选项"),
 	),
 	EnterSpace: key.NewBinding(
 		key.WithKeys("enter", " "),
-		key.WithHelp("enter/space", "confirm"),
+		key.WithHelp("enter/space", "确认"),
 	),
 	Yes: key.NewBinding(
 		key.WithKeys("y", "Y"),
-		key.WithHelp("y/Y", "yes"),
+		key.WithHelp("y/Y", "是"),
 	),
 	No: key.NewBinding(
 		key.WithKeys("n", "N"),
-		key.WithHelp("n/N", "no"),
+		key.WithHelp("n/N", "否"),
 	),
 	Tab: key.NewBinding(
 		key.WithKeys("tab"),
-		key.WithHelp("tab", "switch options"),
+		key.WithHelp("tab", "切换选项"),
 	),
 }
 
@@ -97,8 +97,8 @@ func (q *quitDialogCmp) View() string {
 		noStyle = noStyle.Background(t.Background()).Foreground(t.Primary())
 	}
 
-	yesButton := yesStyle.Padding(0, 1).Render("Yes")
-	noButton := noStyle.Padding(0, 1).Render("No")
+	yesButton := yesStyle.Padding(0, 1).Render("是")
+	noButton := noStyle.Padding(0, 1).Render("否")
 
 	buttons := lipgloss.JoinHorizontal(lipgloss.Left, yesButton, spacerStyle.Render("  "), noButton)
 

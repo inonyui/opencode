@@ -22,11 +22,11 @@ func (k argumentsDialogKeyMap) ShortHelp() []key.Binding {
 	return []key.Binding{
 		key.NewBinding(
 			key.WithKeys("enter"),
-			key.WithHelp("enter", "confirm"),
+			key.WithHelp("enter", "确认"),
 		),
 		key.NewBinding(
 			key.WithKeys("esc"),
-			key.WithHelp("esc", "cancel"),
+			key.WithHelp("esc", "取消"),
 		),
 	}
 }
@@ -69,7 +69,7 @@ func NewMultiArgumentsDialogCmp(commandID, content string, argNames []string) Mu
 
 	for i, name := range argNames {
 		ti := textinput.New()
-		ti.Placeholder = fmt.Sprintf("Enter value for %s...", name)
+		ti.Placeholder = fmt.Sprintf("输入 %s 的值...", name)
 		ti.Width = 40
 		ti.Prompt = ""
 		ti.PlaceholderStyle = ti.PlaceholderStyle.Background(t.Background())
@@ -189,14 +189,14 @@ func (m MultiArgumentsDialogCmp) View() string {
 		Width(maxWidth).
 		Padding(0, 1).
 		Background(t.Background()).
-		Render("Command Arguments")
+		Render("命令参数")
 
 	explanation := lipgloss.NewStyle().
 		Foreground(t.Text()).
 		Width(maxWidth).
 		Padding(0, 1).
 		Background(t.Background()).
-		Render("This command requires multiple arguments. Please enter values for each:")
+		Render("此命令需要多个参数，请为每个参数输入值：")
 
 	// Create input fields for each argument
 	inputFields := make([]string, len(m.inputs))

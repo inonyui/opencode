@@ -251,7 +251,7 @@ func NewCompletionDialogCmp(completionProvider CompletionProvider) CompletionDia
 	li := utilComponents.NewSimpleList(
 		items,
 		7,
-		"No file matches found",
+		"没有找到匹配文件",
 		false,
 	)
 

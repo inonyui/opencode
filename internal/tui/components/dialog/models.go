@@ -64,43 +64,43 @@ type modelKeyMap struct {
 var modelKeys = modelKeyMap{
 	Up: key.NewBinding(
 		key.WithKeys("up"),
-		key.WithHelp("↑", "previous model"),
+		key.WithHelp("↑", "上一个模型"),
 	),
 	Down: key.NewBinding(
 		key.WithKeys("down"),
-		key.WithHelp("↓", "next model"),
+		key.WithHelp("↓", "下一个模型"),
 	),
 	Left: key.NewBinding(
 		key.WithKeys("left"),
-		key.WithHelp("←", "scroll left"),
+		key.WithHelp("←", "向左滚动"),
 	),
 	Right: key.NewBinding(
 		key.WithKeys("right"),
-		key.WithHelp("→", "scroll right"),
+		key.WithHelp("→", "向右滚动"),
 	),
 	Enter: key.NewBinding(
 		key.WithKeys("enter"),
-		key.WithHelp("enter", "select model"),
+		key.WithHelp("enter", "选择模型"),
 	),
 	Escape: key.NewBinding(
 		key.WithKeys("esc"),
-		key.WithHelp("esc", "close"),
+		key.WithHelp("esc", "关闭"),
 	),
 	J: key.NewBinding(
 		key.WithKeys("j"),
-		key.WithHelp("j", "next model"),
+		key.WithHelp("j", "下一个模型"),
 	),
 	K: key.NewBinding(
 		key.WithKeys("k"),
-		key.WithHelp("k", "previous model"),
+		key.WithHelp("k", "上一个模型"),
 	),
 	H: key.NewBinding(
 		key.WithKeys("h"),
-		key.WithHelp("h", "scroll left"),
+		key.WithHelp("h", "向左滚动"),
 	),
 	L: key.NewBinding(
 		key.WithKeys("l"),
-		key.WithHelp("l", "scroll right"),
+		key.WithHelp("l", "向右滚动"),
 	),
 }
 
@@ -126,7 +126,7 @@ func (m *modelDialogCmp) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.switchProvider(1)
 			}
 		case key.Matches(msg, modelKeys.Enter):
-			util.ReportInfo(fmt.Sprintf("selected model: %s", m.models[m.selectedIdx].Name))
+			util.ReportInfo(fmt.Sprintf("已选择模型: %s", m.models[m.selectedIdx].Name))
 			return m, util.CmdHandler(ModelSelectedMsg{Model: m.models[m.selectedIdx]})
 		case key.Matches(msg, modelKeys.Escape):
 			return m, util.CmdHandler(CloseModelDialogMsg{})
@@ -196,7 +196,7 @@ func (m *modelDialogCmp) View() string {
 		Bold(true).
 		Width(maxDialogWidth).
 		Padding(0, 0, 1).
-		Render(fmt.Sprintf("Select %s Model", providerName))
+		Render(fmt.Sprintf("选择 %s 模型", providerName))
 
 	// Render visible models
 	endIdx := min(m.scrollOffset+numVisibleModels, len(m.models))

@@ -44,55 +44,55 @@ const (
 var keys = keyMap{
 	Logs: key.NewBinding(
 		key.WithKeys("ctrl+l"),
-		key.WithHelp("ctrl+l", "logs"),
+		key.WithHelp("ctrl+l", "日志"),
 	),
 
 	Quit: key.NewBinding(
 		key.WithKeys("ctrl+c"),
-		key.WithHelp("ctrl+c", "quit"),
+		key.WithHelp("ctrl+c", "退出"),
 	),
 	Help: key.NewBinding(
 		key.WithKeys("ctrl+_", "ctrl+h"),
-		key.WithHelp("ctrl+?", "toggle help"),
+		key.WithHelp("ctrl+?", "帮助"),
 	),
 
 	SwitchSession: key.NewBinding(
 		key.WithKeys("ctrl+s"),
-		key.WithHelp("ctrl+s", "switch session"),
+		key.WithHelp("ctrl+s", "切换会话"),
 	),
 
 	Commands: key.NewBinding(
 		key.WithKeys("ctrl+k"),
-		key.WithHelp("ctrl+k", "commands"),
+		key.WithHelp("ctrl+k", "命令"),
 	),
 	Filepicker: key.NewBinding(
 		key.WithKeys("ctrl+f"),
-		key.WithHelp("ctrl+f", "select files to upload"),
+		key.WithHelp("ctrl+f", "选择文件上传"),
 	),
 	Models: key.NewBinding(
 		key.WithKeys("ctrl+o"),
-		key.WithHelp("ctrl+o", "model selection"),
+		key.WithHelp("ctrl+o", "选择模型"),
 	),
 
 	SwitchTheme: key.NewBinding(
 		key.WithKeys("ctrl+t"),
-		key.WithHelp("ctrl+t", "switch theme"),
+		key.WithHelp("ctrl+t", "切换主题"),
 	),
 }
 
 var helpEsc = key.NewBinding(
 	key.WithKeys("?"),
-	key.WithHelp("?", "toggle help"),
+	key.WithHelp("?", "帮助"),
 )
 
 var returnKey = key.NewBinding(
 	key.WithKeys("esc"),
-	key.WithHelp("esc", "close"),
+	key.WithHelp("esc", "关闭"),
 )
 
 var logsKeyReturnKey = key.NewBinding(
 	key.WithKeys("esc", "backspace", quitKey),
-	key.WithHelp("esc/q", "go back"),
+	key.WithHelp("esc/q", "返回"),
 )
 
 type appModel struct {
@@ -170,7 +170,7 @@ func (a appModel) Init() tea.Cmd {
 		if err != nil {
 			return util.InfoMsg{
 				Type: util.InfoTypeError,
-				Msg:  "Failed to check init status: " + err.Error(),
+				Msg:  "检查初始化状态失败: " + err.Error(),
 			}
 		}
 		return dialog.ShowInitDialogMsg{Show: shouldShow}
@@ -305,12 +305,12 @@ func (a appModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case startCompactSessionMsg:
 		// Start compacting the current session
-		a.isCompacting = true
-		a.compactingMessage = "Starting summarization..."
+			a.isCompacting = true
+		a.compactingMessage = "正在开始总结..."
 
 		if a.selectedSession.ID == "" {
 			a.isCompacting = false
-			return a, util.ReportWarn("No active session to summarize")
+			return a, util.ReportWarn("没有活跃会话可总结")
 		}
 
 		// Start the summarization process
@@ -331,7 +331,7 @@ func (a appModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		if payload.Done && payload.Type == agent.AgentEventTypeSummarize {
 			a.isCompacting = false
-			return a, util.ReportInfo("Session summarization complete")
+			return a, util.ReportInfo("会话总结完成")
 		} else if payload.Done && payload.Type == agent.AgentEventTypeResponse && a.selectedSession.ID != "" {
 			model := a.app.CoderAgent.Model()
 			contextWindow := model.ContextWindow
@@ -350,7 +350,7 @@ func (a appModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case dialog.ThemeChangedMsg:
 		a.pages[a.currentPage], cmd = a.pages[a.currentPage].Update(msg)
 		a.showThemeDialog = false
-		return a, tea.Batch(cmd, util.ReportInfo("Theme changed to: "+msg.ThemeName))
+		return a, tea.Batch(cmd, util.ReportInfo("主题已切换为: "+msg.ThemeName))
 
 	case dialog.CloseModelDialogMsg:
 		a.showModelDialog = false
@@ -364,7 +364,7 @@ func (a appModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return a, util.ReportError(err)
 		}
 
-		return a, util.ReportInfo(fmt.Sprintf("Model changed to %s", model.Name))
+		return a, util.ReportInfo(fmt.Sprintf("模型已切换为 %s", model.Name))
 
 	case dialog.ShowInitDialogMsg:
 		a.showInitDialog = msg.Show
@@ -412,7 +412,7 @@ func (a appModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		if msg.Command.Handler != nil {
 			return a, msg.Command.Handler(msg.Command)
 		}
-		return a, util.ReportInfo("Command selected: " + msg.Command.Title)
+		return a, util.ReportInfo("已选择命令: " + msg.Command.Title)
 
 	case dialog.ShowMultiArgumentsDialogMsg:
 		// Show multi-arguments dialog
@@ -482,7 +482,7 @@ func (a appModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					return a, util.ReportError(err)
 				}
 				if len(sessions) == 0 {
-					return a, util.ReportWarn("No sessions available")
+					return a, util.ReportWarn("没有可用会话")
 				}
 				a.sessionDialog.SetSessions(sessions)
 				a.showSessionDialog = true
@@ -493,7 +493,7 @@ func (a appModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if a.currentPage == page.ChatPage && !a.showQuit && !a.showPermissions && !a.showSessionDialog && !a.showThemeDialog && !a.showFilepicker {
 				// Show commands dialog
 				if len(a.commands) == 0 {
-					return a, util.ReportWarn("No commands available")
+					return a, util.ReportWarn("没有可用命令")
 				}
 				a.commandDialog.SetCommands(a.commands)
 				a.showCommandDialog = true
@@ -680,7 +680,7 @@ func (a *appModel) findCommand(id string) (dialog.Command, bool) {
 func (a *appModel) moveToPage(pageID page.PageID) tea.Cmd {
 	if a.app.CoderAgent.IsBusy() {
 		// For now we don't move to any page if the agent is busy
-		return util.ReportWarn("Agent is busy, please wait...")
+		return util.ReportWarn("代理正忙，请稍候...")
 	}
 
 	var cmds []tea.Cmd
@@ -750,7 +750,7 @@ func (a appModel) View() string {
 			Background(t.Background()).
 			Foreground(t.Text())
 
-		overlay := style.Render("Summarizing\n" + a.compactingMessage)
+		overlay := style.Render("正在总结...\n" + a.compactingMessage)
 		row := lipgloss.Height(appView) / 2
 		row -= lipgloss.Height(overlay) / 2
 		col := lipgloss.Width(appView) / 2
@@ -923,16 +923,16 @@ func New(app *app.App) tea.Model {
 
 	model.RegisterCommand(dialog.Command{
 		ID:          "init",
-		Title:       "Initialize Project",
-		Description: "Create/Update the OpenCode.md memory file",
+		Title:       "初始化项目",
+		Description: "创建/更新项目的 OpenCode.md 记忆文件",
 		Handler: func(cmd dialog.Command) tea.Cmd {
-			prompt := `Please analyze this codebase and create a OpenCode.md file containing:
-1. Build/lint/test commands - especially for running a single test
-2. Code style guidelines including imports, formatting, types, naming conventions, error handling, etc.
+			prompt := `请分析此代码库并创建 OpenCode.md 文件，包含：
+1. 构建/检查/测试命令 - 特别是运行单个测试的方法
+2. 代码风格指南：导入、格式化、类型、命名规范、错误处理等
 
-The file you create will be given to agentic coding agents (such as yourself) that operate in this repository. Make it about 20 lines long.
-If there's already a opencode.md, improve it.
-If there are Cursor rules (in .cursor/rules/ or .cursorrules) or Copilot rules (in .github/copilot-instructions.md), make sure to include them.`
+此文件将提供给在此仓库中操作的 AI 编程代理使用。大约 20 行。
+如果已有 opencode.md，请改进它。
+如果有 Cursor 规则（.cursor/rules/ 或 .cursorrules）或 Copilot 规则（.github/copilot-instructions.md），请将其包含进来。`
 			return tea.Batch(
 				util.CmdHandler(chat.SendMsg{
 					Text: prompt,
@@ -943,8 +943,8 @@ If there are Cursor rules (in .cursor/rules/ or .cursorrules) or Copilot rules (
 
 	model.RegisterCommand(dialog.Command{
 		ID:          "compact",
-		Title:       "Compact Session",
-		Description: "Summarize the current session and create a new one with the summary",
+		Title:       "压缩会话",
+		Description: "总结当前会话并创建新会话",
 		Handler: func(cmd dialog.Command) tea.Cmd {
 			return func() tea.Msg {
 				return startCompactSessionMsg{}
